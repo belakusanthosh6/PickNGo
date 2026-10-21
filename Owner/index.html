@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PickNGo - Owner Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;650;700;750;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="owner">
+<nav class="topbar">
+    <a href="../Customer/index.html" class="brand">pick<span>n</span>go.</a>
+    <span class="portal-label">SELLER HUB</span>
+    <a href="../Customer/index.html" class="owner-link">View customer site ↗</a>
+</nav>
+
+<main class="container">
+
+    <section id="loginSection" class="login-wrap">
+        <div class="login-hero">
+            <img src="../assets/fresh-banner.jpg" alt="" aria-hidden="true">
+            <div class="login-hero-text">
+                <span class="eyebrow">PICKNGO SELLER HUB</span>
+                <h1>Run your shop in minutes.</h1>
+                <p>Add products, set prices by kg, litre or piece, and handle pickups — all in one place.</p>
+            </div>
+        </div>
+        <div class="panel login-panel">
+            <span class="login-icon" aria-hidden="true">↗</span>
+            <h2>Welcome back</h2>
+            <p class="login-subtitle">Sign in to your shop.</p>
+            <form id="loginForm">
+                <label for="ownerEmail">Email address</label>
+                <input id="ownerEmail" type="email" required autocomplete="username" placeholder="Enter owner email">
+                <label for="ownerPassword">Password</label>
+                <input id="ownerPassword" type="password" required autocomplete="current-password" placeholder="Enter password">
+                <button type="submit">Sign In</button>
+            </form>
+            <p id="loginMessage" aria-live="polite"></p>
+        </div>
+    </section>
+
+    <section id="dashboard" class="hidden">
+
+        <div class="owner-banner">
+            <div>
+                <span class="eyebrow">YOUR SHOP</span>
+                <h1 id="shopTitle">Your shop</h1>
+                <p id="signedInMessage"></p>
+            </div>
+            <button id="signOutButton" class="banner-button" type="button">Sign Out</button>
+        </div>
+
+        <div class="stat-row">
+            <div class="stat-card"><span>Products</span><b id="statProducts">0</b></div>
+            <div class="stat-card"><span>In stock</span><b id="statInStock">0</b></div>
+            <div class="stat-card warn"><span>Out of stock</span><b id="statOut">0</b></div>
+            <div class="stat-card accent"><span>Pending pickups</span><b id="statReserved">0</b></div>
+        </div>
+
+        <div class="owner-layout">
+            <section class="owner-card form-card">
+                <h2 id="productFormTitle">Add Product</h2>
+                <form id="productForm">
+                    <label for="productName">Product name</label>
+                    <input id="productName" required maxlength="100" placeholder="e.g. Fresh Bananas">
+
+                    <label for="productShop">Shop name</label>
+                    <input id="productShop" required maxlength="100">
+
+                    <label>Product picture</label>
+                    <div class="picker-preview">
+                        <div id="pickerPreview" class="picker-preview-img"></div>
+                        <div>
+                            <b id="pickerLabel">Auto-pick from name</b>
+                            <p>Choose a stored picture below, or we match one from the name.</p>
+                        </div>
+                    </div>
+                    <div id="pickerTabs" class="picker-tabs" role="tablist"></div>
+                    <div id="pickerGrid" class="picker-grid"></div>
+
+                    <div class="form-row">
+                        <div>
+                            <label for="productPrice">Price (₹)</label>
+                            <input id="productPrice" type="number" min="0" step="0.01" required placeholder="0.00">
+                        </div>
+                        <div>
+                            <label for="productUnitSize">Sold per</label>
+                            <div class="unit-field">
+                                <input id="productUnitSize" type="number" min="0.01" step="0.01" value="1" required>
+                                <select id="productUnit"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="unit-chips" id="unitChips"></div>
+
+                    <label for="productStock">Stock available <span id="stockHint" class="hint"></span></label>
+                    <input id="productStock" type="number" min="0" step="1" required placeholder="How many can you sell?">
+
+                    <div class="form-buttons">
+                        <button id="saveProductButton" type="submit">Add Product</button>
+                        <button id="cancelEditButton" class="secondary hidden" type="button">Cancel Edit</button>
+                    </div>
+                    <p id="productMessage" aria-live="polite"></p>
+                </form>
+            </section>
+
+            <section class="owner-card">
+                <div class="panel-head">
+                    <h2>Your Products</h2>
+                    <button id="refreshProductsButton" class="secondary" type="button">Refresh</button>
+                </div>
+                <div id="ownerProductList"></div>
+            </section>
+        </div>
+
+        <section class="owner-card">
+            <div class="panel-head">
+                <h2>Customer Reservations</h2>
+                <button id="refreshReservationsButton" class="secondary" type="button">Refresh</button>
+            </div>
+            <p id="reservationMessage" aria-live="polite"></p>
+            <div id="reservationList"></div>
+        </section>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
+<script src="../library.js"></script>
+<script src="owner.js"></script>
+<script src="../motion.js"></script>
+</body>
+</html>

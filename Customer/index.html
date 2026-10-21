@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PickNGo - Find Products Near You</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;650;700;750;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+<nav class="topbar">
+<a href="index.html" class="brand">pick<span>n</span>go<span class="brand-dot">.</span></a>
+<div class="location"><b>Shop your neighbourhood</b><span>Local shops · Pickup orders <span aria-hidden="true">⌄</span></span></div>
+<a href="#myReservationsSection" class="orders-link">My reservations</a>
+<a href="../Owner/index.html" class="owner-link">For shop owners ↗</a>
+<button type="button" id="authButton" class="auth-button">Sign in</button>
+<a href="#cartSection" class="cart-pill"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l3 12h11l3-9H6M9 21h.01M18 21h.01"/></svg> My cart <b id="cartBadge">0</b></a>
+</nav>
+<div class="category-nav"><a href="#productList">All products</a><a href="#categories">Shop by category</a><a href="#myReservationsSection">Reservations</a><span>Fresh finds. Familiar shops.</span></div>
+<header class="hero"><img src="../assets/fresh-banner.jpg" width="1536" height="768" alt="Fresh vegetables and grocery essentials in a shopping bag"><div class="hero-text"><span class="eyebrow">YOUR EVERYDAY ESSENTIALS</span><h1>Fresh picks.<br> Just around the corner.</h1><p>Your neighbourhood, in your basket.</p><a class="hero-cta" href="#productList">Shop fresh essentials <span>→</span></a></div></header>
+<main class="container">
+
+    <!-- Search and product discovery -->
+    <section class="product-search-section">
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder='Search for “milk”, “bread”, and more'
+                aria-label="Search products or shops"
+            >
+
+            <button id="searchButton" type="button">
+                Search
+            </button>
+
+
+            <label class="availability-label">
+                <input type="checkbox" id="availableOnly" checked>
+                Show available products only
+            </label>
+        </div>
+    </section>
+
+    <section id="categories" class="category-section"><div class="section-heading"><h2>Shop by category</h2><button class="text-button chip active" data-q="">View all →</button></div><div class="category-grid">
+<button class="category-tile chip" data-q="spinach"><span class="category-image"><img src="../assets/product-6.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Vegetables</span></button><button class="category-tile chip" data-q="banana"><span class="category-image"><img src="../assets/product-0.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Fresh fruits</span></button><button class="category-tile chip" data-q="milk"><span class="category-image"><img src="../assets/product-2.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Milk & dairy</span></button><button class="category-tile chip" data-q="egg"><span class="category-image"><img src="../assets/product-3.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Eggs</span></button><button class="category-tile chip" data-q="bread"><span class="category-image"><img src="../assets/product-4.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Bread & bakery</span></button><button class="category-tile chip" data-q="curd"><span class="category-image"><img src="../assets/product-8.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Curd & yogurt</span></button><button class="category-tile chip" data-q="rice"><span class="category-image"><img src="../assets/product-10.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Rice & grains</span></button><button class="category-tile chip" data-q="oil"><span class="category-image"><img src="../assets/product-9.jpg" width="384" height="384" alt="" loading="lazy"></span><span>Cooking essentials</span></button></div></section>
+    <div class="section-heading products-heading"><h2>From your local shops</h2><span>Compare. Reserve. Pick up.</span></div>
+    <!-- Reservation confirmation message -->
+    <div
+        id="reservationNotice"
+        class="hidden"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+    <!-- Product count and loading/search messages -->
+    <p id="message" aria-live="polite">
+        Loading products...
+    </p>
+
+    <!-- Grouped product cards appear here -->
+    <section
+        class="products"
+        id="productList"
+        aria-label="Available products"
+    ></section>
+
+    <!-- Shopping cart and checkout -->
+    <section id="cartSection" class="cart-section">
+
+        <h2>My cart</h2>
+
+        <p id="cartMessage">Your cart is empty.</p>
+
+        <div id="cartItems"></div>
+
+        <h3>
+            Total: ₹<span id="cartTotal">0.00</span>
+        </h3>
+
+        <form id="checkoutForm">
+
+            <h3>Customer Details</h3>
+
+            <label for="customerName">
+                Your name
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+                name="customerName"
+                placeholder="Enter your name"
+                maxlength="100"
+                autocomplete="name"
+                required
+            >
+
+            <label for="customerPhone">
+                Phone number
+            </label>
+
+            <input
+                type="tel"
+                id="customerPhone"
+                name="customerPhone"
+                placeholder="Enter your phone number"
+                maxlength="30"
+                autocomplete="tel"
+                required
+            >
+
+            <button type="submit" id="checkoutButton">
+                Reserve All Products
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- Collapsible reservation lookup at the bottom -->
+    <section
+        class="cart-section reservations-panel"
+        id="myReservationsSection"
+    >
+
+        <details>
+            <summary class="reservations-summary">
+                <span>My reservations</span>
+                <span class="reservations-hint">
+                    View reservation details
+                </span>
+            </summary>
+
+            <div class="reservations-content">
+
+                <p>
+                    Enter your reservation ID and the phone number
+                    you used when booking to check your reservation.
+                </p>
+
+                <form id="reservationLookupForm">
+
+                    <label for="lookupReservationId">
+                        Reservation ID
+                    </label>
+
+                    <input
+                        type="number"
+                        id="lookupReservationId"
+                        min="1"
+                        step="1"
+                        placeholder="Enter your reservation ID"
+                        required
+                    >
+
+                    <label for="lookupPhone">
+                        Phone number used during booking
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="lookupPhone"
+                        maxlength="30"
+                        placeholder="Enter your phone number"
+                        autocomplete="tel"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        id="lookupReservationButton"
+                    >
+                        Check Reservation
+                    </button>
+
+                </form>
+
+                <div
+                    id="reservationLookupResult"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+            </div>
+        </details>
+
+    </section>
+
+</main>
+
+<!-- Sign-in sheet: shown on opening (with guest option) and when reserving without an account -->
+<div id="authSheet" class="sheet-overlay hidden" role="dialog" aria-modal="true" aria-label="Sign in to PickNGo">
+    <div class="sheet auth-sheet">
+        <div class="sheet-head">
+            <h2 id="authTitle">Sign in to pickngo</h2>
+            <button type="button" class="sheet-close" id="authClose" aria-label="Close">×</button>
+        </div>
+        <p class="sheet-sub" id="authSubtitle">Sign in to reserve products. Browsing is always free.</p>
+        <form id="authForm">
+            <div id="authNameRow" class="hidden">
+                <label for="authName">Your name</label>
+                <input id="authName" type="text" maxlength="100" autocomplete="name" placeholder="Enter your name">
+            </div>
+            <label for="authEmail">Email address</label>
+            <input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com">
+            <label for="authPassword">Password</label>
+            <input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="Your password">
+            <button type="submit" id="authSubmit">Sign In</button>
+        </form>
+        <p id="authMessage" class="auth-message" aria-live="polite"></p>
+        <div class="auth-alt">
+            <button type="button" class="text-button" id="authToggle">New here? Create an account</button>
+            <button type="button" class="secondary" id="authGuest">Continue as guest</button>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer"><a class="brand" href="index.html">pick<span>n</span>go.</a><span>Good things, closer to home.</span><a href="../Owner/index.html">Shop owner portal ↗</a></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
+<script src="../library.js"></script>
+<script src="../auth.js"></script>
+<script src="customer.js"></script>
+<script src="../motion.js"></script>
+
+<script src="../fx.js"></script>
+</body>
+</html>
